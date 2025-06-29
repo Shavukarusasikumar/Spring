@@ -154,16 +154,7 @@ class AppConfig {}
 
 ---
 
-## 🧱 9. Bean Scope
-
-| Scope     | Meaning |
-|-----------|---------|
-| singleton | One shared instance (default) |
-| prototype | New instance every time |
-
----
-
-## 🔀 10. Primary vs Qualifier
+## 🔀 9. Primary vs Qualifier
 
 ```java
 @Component
@@ -180,7 +171,7 @@ Engine engine;
 
 ---
 
-## 📦 11. Java Bean vs Spring Bean vs POJO
+## 📦 10. Java Bean vs Spring Bean vs POJO
 
 | Type        | Description |
 |-------------|-------------|
@@ -190,7 +181,7 @@ Engine engine;
 
 ---
 
-## 🔁 12. When Beans are Created
+## 🔁 11. When Beans are Created
 
 > Beans are created when `ApplicationContext` is initialized.
 
@@ -200,7 +191,7 @@ var context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 ---
 
-## 🧪 13. Testability
+## 🧪 12. Testability
 
 Constructor injection allows easy testing:
 
@@ -223,3 +214,44 @@ Car car = new Car(mockEngine); // Easy to test ✅
 | Constructor Injection | Required, immutable |
 | Setter Injection | Optional, changeable |
 | Field Injection | Easy but hidden, not testable |
+
+# 🌱 Spring Bean Scopes
+
+In Spring, **scope** defines **how many times** and **how long** a bean is created and used in the application.
+
+---
+
+## ✅ What is Bean Scope?
+
+> A bean scope controls **how many instances** of a bean Spring creates and **how it is shared**.
+
+Example:
+- 🔁 Should Spring reuse the same object (`singleton`)?
+- 🆕 Or should it create a new object every time (`prototype`)?
+
+---
+
+## 📦 Types of Bean Scopes
+
+| Scope        | Description | Context |
+|--------------|-------------|---------|
+| `singleton`  | **(Default)** Only one instance per Spring container | All apps |
+| `prototype`  | A **new instance** every time the bean is requested | All apps |
+| `request`    | One bean per HTTP request | Web apps |
+| `session`    | One bean per HTTP session | Web apps |
+| `application`| One bean per ServletContext (web application) | Web apps |
+| `websocket`  | One bean per WebSocket session | Web apps with WebSocket |
+
+---
+
+## 🔁 `singleton` (Default)
+
+- Only **one bean object** created for entire Spring container
+- All requests get **same instance**
+- Memory efficient, stateless
+
+```java
+@Component
+@Scope("singleton") // or omit this; it's the default
+public class Engine {}
+
