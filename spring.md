@@ -1,5 +1,5 @@
 
-# 🌱 Spring Framework - Simplified Recap
+# 🌱 Spring Framework
 
 This document gives you a quick, simple, and in-depth understanding of the core Spring concepts with examples.
 
