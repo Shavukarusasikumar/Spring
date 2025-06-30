@@ -377,3 +377,121 @@ public class CourseJpaRepository {
 | Read                 | SQL select query                   | `entityManager.find()`                  |
 | Flexibility          | High (you control SQL)             | High (you control objects/relations)    |
 | Boilerplate Code     | More                               | Less                                    |
+
+---
+
+# 📚 What is Spring Data JPA?
+
+**Spring Data JPA** is a part of Spring that makes database work easier using **JPA**.
+
+You just write a simple interface, and Spring auto-generates the code to talk to the database.
+
+---
+
+## ✅ Example Repository
+
+```java
+@Repository
+public interface CourseSpringDataEntityRepository extends JpaRepository<Course, Integer> {
+    List<Course> findByName(String name);
+}
+```
+
+### 🔍 How does `findByName` work?
+
+- Spring looks at `findByName(String name)`
+- It reads: "find all Course records where `name = ?`"
+- It creates the SQL behind the scenes:
+  
+```sql
+SELECT * FROM course WHERE name = ?
+```
+
+---
+
+## ✅ Why Use Spring Data JPA?
+
+| Feature               | Benefit                            |
+|------------------------|------------------------------------|
+| No boilerplate code    | No need to write SQL manually      |
+| Auto CRUD methods      | `save()`, `findAll()`, `delete()`  |
+| Custom query support   | With method names or `@Query`      |
+| Works with Hibernate   | Hibernate runs behind the scenes   |
+
+---
+
+## ✅ Entity Example
+
+```java
+@Entity
+public class Course {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String name;
+}
+```
+
+---
+
+## ✅ Custom Query Method
+
+```java
+List<Course> findByName(String name);
+```
+
+or
+
+```java
+@Query("SELECT c FROM Course c WHERE c.name = :name")
+List<Course> searchByName(@Param("name") String name);
+```
+
+---
+
+## ✅ Common Built-in Methods
+
+```java
+findAll();
+findById(id);
+save(course);
+deleteById(id);
+```
+
+---
+
+# 🔍 JPA vs Hibernate (Simple)
+
+### ✅ What is JPA?
+
+- JPA is just **rules** (an interface)
+- It says how to map Java classes to DB tables
+- JPA **can’t do anything by itself**
+
+🧠 Think: **Remote control**
+
+---
+
+### ✅ What is Hibernate?
+
+- Hibernate is a **tool** that follows JPA rules
+- It actually **connects and runs SQL**
+- Hibernate adds **extra features** (caching, etc.)
+
+🧠 Think: **TV**
+
+---
+
+## ✅ Summary
+
+| JPA           | Hibernate             |
+|---------------|-----------------------|
+| Interface     | Implementation        |
+| Only rules    | Full working tool     |
+| Needs provider| Is the provider       |
+| Portable code | Extra features        |
+
+---
+
+✅ In Spring Boot, when you use Spring Data JPA — Hibernate is used **by default** to do the work.
+
